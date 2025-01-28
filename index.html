@@ -1,0 +1,200 @@
+<link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phawat - My Profile & Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #232f3e;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9900;
+            margin-right: 30px;
+        }
+
+        .nav-bar {
+            background-color: #37475a;
+            padding: 10px;
+            color: white;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 30px;
+            border: 3px solid #ff9900;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .portfolio-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .amazon-button {
+            background-color: #ff9900;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background-color: #232f3e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        .portfolio-item img {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    /* Add these new hover effects */
+    .portfolio-item img:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        filter: brightness(1.05);
+    }
+
+    /* Add this for smooth grid item transition */
+    .portfolio-item {
+        transition: transform 0.3s ease;
+    }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Phawat</div>
+        <input type="text" placeholder="Search portfolio..." style="flex-grow: 1; padding: 5px">
+        <div style="margin-left: 20px;">Hello, User!</div>
+    </header>
+
+    <nav class="nav-bar">
+        <a href="#" class="nav-link">My Profile</a>
+        <a href="#" class="nav-link">Portfolio</a>
+        <a href="#" class="nav-link">Skills</a>
+        <a href="#" class="nav-link">Experience</a>
+        <a href="#" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="images/My_logo_Only_Logo.png" alt="Profile Picture" class="profile-pic">
+            <div>
+                <h1>Phawat Tanajiranon</h1>
+                <p>📌 Senior Full Stack Developer</p>
+                <p>⭐ I want to learn many things</p>
+                <button class="amazon-button">Contact Me</button>
+            </div>
+        </div>
+
+        <h2 style="margin: 30px 0;">Featured Projects</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="images/Abac.jpg" 
+                    alt="Project 1" 
+                    style="object-fit: cover; display: block;">
+                <h3 style="margin-top: 30px;">ABAC</h3>
+                <p>Student_ABAC</p>
+                <button class="amazon-button">View Details</button>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/WAT.jpg" 
+                     alt="Work and Travel USA" 
+                     style="object-fit: cover; display: block;">
+                <h3 style="margin-top: 30px;">Work and Travel USA</h3>
+                <p>Work at Dollywood theme park and Thai restaurant</p>
+                <button class="amazon-button">View Details</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© Phawat Tanajiranon ABAC Student.</p>
+        <div style="margin-top: 10px;">
+            <a href="#" class="nav-link">Privacy Policy</a>
+            <a href="#" class="nav-link">Terms of Service</a>
+            <a href="#" class="nav-link">About Me</a>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.amazon-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Remove any existing ripples
+                const existingRipples = this.querySelectorAll('.ripple');
+                existingRipples.forEach(ripple => ripple.remove());
+                
+                // Create new ripple
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                
+                // Position ripple
+                const rect = button.getBoundingClientRect();
+                ripple.style.left = `${e.clientX - rect.left}px`;
+                ripple.style.top = `${e.clientY - rect.top}px`;
+                
+                this.appendChild(ripple);
+            });
+        });
+        </script>
+</body>
+</html>
