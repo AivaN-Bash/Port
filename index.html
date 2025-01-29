@@ -205,6 +205,41 @@
         transform: scaleX(1);
         transform-origin: left;
     }
+    .corgi-container {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    animation: float 8s ease-in-out infinite;
+}
+
+.corgi {
+    font-size: 60px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.corgi:hover {
+    transform: scale(1.2) translateY(-10px);
+    animation-play-state: paused;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(calc(100vw - 120px)) rotate(-5deg);
+    }
+    50% {
+        transform: translateX(calc(100vw - 120px)) translateY(-20px) rotate(5deg);
+    }
+    75% {
+        transform: translateX(0) translateY(-10px) rotate(-3deg);
+    }
+}
     
     </style>
 </head>
@@ -256,6 +291,10 @@
         </div>
     </div>
 
+    <div class="corgi-container">
+        <div class="corgi">🐶</div>
+    </div>
+
     <footer class="footer">
         <p>© Phawat Tanajiranon ABAC Student.</p>
         <div style="margin-top: 10px;">
@@ -283,6 +322,12 @@
                 
                 setTimeout(() => ripple.remove(), 600);
             });
+        });
+
+        document.querySelector('.corgi').addEventListener('click', function() {
+            this.style.animation = 'none';
+            void this.offsetWidth; // Trigger reflow
+            this.style.animation = 'float 8s ease-in-out infinite';
         });
 
         // Scroll animation trigger
