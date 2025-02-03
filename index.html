@@ -364,20 +364,94 @@
             25% { transform: rotate(10deg); }
             75% { transform: rotate(-10deg); }
         }
-    
+     /* Add to existing styles */
+     .search-container {
+        position: relative;
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+
+    .search-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        color: #000000;
+        background: white;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        max-height: 300px;
+        overflow-y: auto;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        display: none;
+    }
+
+    .search-suggestions.visible {
+        opacity: 1;
+        transform: translateY(0);
+        display: block;
+    }
+
+    .suggestion-item {
+        padding: 12px 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        transform-origin: top;
+        opacity: 0;
+        transform: scale(0.9);
+        animation: slideIn 0.3s ease forwards;
+    }
+
+    .suggestion-item:hover {
+        background: #f5f5f5;
+        transform: scale(1.02);
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    body.dark-mode .search-suggestions {
+    /* Ensure dark mode keeps white text */
+    background: #2d2d2d;
+    color: #ffffff; /* Explicitly set white text for dark mode */
+}
+
+    body.dark-mode .suggestion-item:hover {
+        background: #37475a;
+    }
     </style>
 </head>
 <body>
     <body>
-    <header class="header">
-        <div class="logo">Phawat</div>
-        <input type="text" placeholder="Search portfolio..." style="flex-grow: 1; padding: 5px">
-        <div class="mode-toggle">
-            <label class="toggle-switch">
-                <input type="checkbox" id="mode-toggle">
-                <span class="slider"></span>
-            </label>
+        <div class="header">
+            <div class="logo">Phawat</div>
+            <div class="search-container">
+                <input type="text" 
+                       id="search-input" 
+                       placeholder="Search projects..." 
+                       autocomplete="off"
+                       style="width: 100%; padding: 8px 20px; border-radius: 20px; border: 1px solid #ddd;">
+                <div class="search-suggestions" id="search-suggestions"></div>
+            </div>
+            <div class="mode-toggle">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="mode-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
+</div>
     </header>
 
     <nav class="nav-bar">
@@ -511,6 +585,82 @@
         modeToggle.addEventListener('change', function() {
             document.body.classList.toggle('dark-mode', this.checked);
         });
+
+        const searchInput = document.getElementById('search-input');
+    const suggestionsContainer = document.getElementById('search-suggestions');
+    const projects = [
+        { 
+            title: "ABAC", 
+            description: "Student_ABAC", 
+            link: "univer.html",
+            keywords: ["university", "student", "abac", "education"]
+        },
+        { 
+            title: "Work and Travel USA", 
+            description: "Work at Dollywood theme park and Thai restaurant", 
+            link: "wat.html",
+            keywords: ["work", "travel", "usa", "experience"]
+        }
+    ];
+
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.trim().toLowerCase();
+        const suggestions = getSuggestions(searchTerm);
+        showSuggestions(suggestions);
+    });
+
+    function getSuggestions(searchTerm) {
+        if (!searchTerm) return [];
+        
+        return projects.filter(project => {
+            return project.title.toLowerCase().includes(searchTerm) ||
+                   project.description.toLowerCase().includes(searchTerm) ||
+                   project.keywords.some(kw => kw.includes(searchTerm));
+        });
+    }
+
+    function showSuggestions(suggestions) {
+        suggestionsContainer.innerHTML = '';
+        suggestionsContainer.classList.toggle('visible', suggestions.length > 0);
+
+        suggestions.forEach((project, index) => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.style.animationDelay = `${index * 0.05}s`;
+            div.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 4px;">${project.title}</div>
+                <div style="font-size: 0.9em; opacity: 0.7;">${project.description}</div>
+            `;
+            
+            div.addEventListener('click', () => {
+                window.location.href = project.link;
+                suggestionsContainer.classList.remove('visible');
+            });
+
+            suggestionsContainer.appendChild(div);
+        });
+
+        if (suggestions.length === 0 && searchInput.value) {
+            const noResults = document.createElement('div');
+            noResults.className = 'suggestion-item';
+            noResults.textContent = 'No results found';
+            suggestionsContainer.appendChild(noResults);
+        }
+    }
+
+    // Close suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target)) {
+            suggestionsContainer.classList.remove('visible');
+        }
+    });
+
+    // Keyboard navigation
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            suggestionsContainer.classList.remove('visible');
+        }
+    });
     </script>
 </body>
 </html>
