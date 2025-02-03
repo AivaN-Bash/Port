@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Phawat</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --background-color: #ffffff;
@@ -276,6 +277,20 @@
         body.dark-mode .floating-shapes div {
             background: rgba(255, 153, 0, 0.2);
         }
+        @keyframes fireworks {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .firework {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff9900;
+            border-radius: 50%;
+            animation: fireworks 1s ease-out;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -360,28 +375,51 @@
             }
         }
         createFloatingShapes();
-
-        // Form submission handler
+        function createFireworks(x, y) {
+            for(let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                
+                // Random movement
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 10;
+                firework.style.setProperty('--x', `${Math.cos(angle) * velocity}px`);
+                firework.style.setProperty('--y', `${Math.sin(angle) * velocity}px`);
+                
+                document.body.appendChild(firework);
+                
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
         document.getElementById('contactForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
             // Show success message
             document.querySelector('.success-message').style.display = 'block';
             
-            // Trigger confetti
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff9900', '#ffffff', '#4CAF50']
-            });
+            // Try confetti, fallback to fireworks
+            try {
+                // Confetti animation
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff9900', '#ffffff', '#4CAF50']
+                });
+            } catch (error) {
+                // Fallback fireworks animation
+                const rect = e.target.getBoundingClientRect();
+                createFireworks(rect.left + rect.width/2, rect.top + rect.height/2);
+            }
 
             // Actually submit the form after animation
             setTimeout(() => {
                 e.target.submit();
             }, 2000);
         });
-
         // Add hover effect to inputs
         document.querySelectorAll('input, textarea').forEach(element => {
             element.addEventListener('mouseenter', () => {
@@ -400,6 +438,54 @@
         setInterval(() => {
             envelope.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
         }, 3000);
+     function createFireworks(x, y) {
+            for(let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                
+                // Random movement
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 10;
+                firework.style.setProperty('--x', `${Math.cos(angle) * velocity}px`);
+                firework.style.setProperty('--y', `${Math.sin(angle) * velocity}px`);
+                
+                document.body.appendChild(firework);
+                
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+
+        // Updated form submission handler
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success message
+            document.querySelector('.success-message').style.display = 'block';
+            
+            // Try confetti, fallback to fireworks
+            try {
+                // Confetti animation
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff9900', '#ffffff', '#4CAF50']
+                });
+            } catch (error) {
+                // Fallback fireworks animation
+                const rect = e.target.getBoundingClientRect();
+                createFireworks(rect.left + rect.width/2, rect.top + rect.height/2);
+            }
+
+            // Actually submit the form after animation
+            setTimeout(() => {
+                e.target.submit();
+            }, 2000);
+        });
+
     </script>
 </body>
 </html>
