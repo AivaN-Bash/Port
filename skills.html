@@ -149,40 +149,145 @@
                 grid-template-columns: 1fr;
             }
         }
+
         .nav-link {
-        position: relative;
-        padding-bottom: 5px;
-        transition: color 0.3s ease;
-    }
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
 
-    .nav-link:hover {
-        color: #ff9900;
-    }
+        .nav-link:hover {
+            color: #ff9900;
+        }
 
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background: #ff9900;
-        bottom: 0;
-        left: 0;
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.3s ease;
-    }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #ff9900;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
 
-    .nav-link:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
-    }
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Light/Dark Mode Toggle Switch */
+        .mode-toggle {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #ff9900;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode .header {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .nav-bar {
+            background-color: #2d2d2d;
+        }
+
+        body.dark-mode .skill-card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        body.dark-mode .skill-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .skill-description {
+            color: #ccc;
+        }
+
+        body.dark-mode .footer {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .nav-link {
+            color: #ffffff;
+        }
+
+        body.dark-mode .nav-link:hover {
+            color: #ff9900;
+        }
+
+        body.dark-mode .section-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .section-title::after {
+            background: #ff9900;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="logo">Phawat</div>
         <input type="text" placeholder="Search skills..." style="flex-grow: 1; padding: 5px">
-        <div style="margin-left: 20px;">Hello, User!</div>
+        <div class="mode-toggle">
+            <label class="toggle-switch">
+                <input type="checkbox" id="mode-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
     </header>
 
     <nav class="nav-bar">
@@ -280,6 +385,12 @@
         };
 
         window.addEventListener('load', animateOnScroll);
+
+        // Light/Dark Mode Toggle
+        const modeToggle = document.getElementById('mode-toggle');
+        modeToggle.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode', this.checked);
+        });
     </script>
 </body>
 </html>
