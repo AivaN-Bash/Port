@@ -132,7 +132,42 @@
             padding: 20px;
             margin-top: 50px;
         }
+        /* Typing Animation */
+        .typing-container {
+            background-color: #232f3e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-family: monospace;
+            margin-bottom: 20px;
+        }
 
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid white; /* Cursor effect */
+            animation: typing 5s steps(40, end), blink-cursor 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-cursor {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: white;
+            }
+        }
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -250,7 +285,11 @@
         <a href="skills.html" class="nav-link">Skills</a>
         <a href="contact.html" class="nav-link">Contact</a>
     </nav>
-
+    <div class="typing-container">
+        <div class="typing-text">
+            🚀 Welcome to Phawat's Portfolio! 🌟
+        </div>
+    </div>
     <div class="profile-container">
         <div class="profile-header">
             <img src="images/My_logo_Only_Logo.png" alt="Profile Picture" class="profile-pic">
