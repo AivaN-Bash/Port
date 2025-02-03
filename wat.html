@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work & Travel USA Experience</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .nav-bar {
+        position: sticky;
+        top: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding: 0.5rem 0;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: white;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    /* Search Bar Style */
+    .search-bar {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 30px;
+        width: 300px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .search-bar:focus {
+        outline: none;
+        width: 350px;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .nav-bar {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .search-bar {
+            width: 100%;
+        }
+
+        .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Parallax Sections */
+        .experience-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .section-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            transform: translateX(-100px);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .section-image.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .section-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .section-text {
+            transform: translateX(100px);
+            opacity: 0;
+            transition: all 1s ease 0.2s;
+        }
+
+        .section-text.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .section-text h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gallery Scroll */
+        .gallery-scroll {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 2rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery-item {
+            flex: 0 0 80vw;
+            margin-right: 2rem;
+            scroll-snap-align: start;
+            border-radius: 20px;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        /* Floating Elements */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating-element {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .section-image, .section-text {
+                transform: none !important;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="skills.html" class="nav-link">Skills</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop>
+            <source src="path-to-usa-timelapse.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>American Adventure</h1>
+            <p class="subtitle">Work & Travel Experience 2023</p>
+        </div>
+    </section>
+
+    <section class="experience-section">
+        <div class="section-content">
+            <div class="section-image floating-element">
+                <img src="images/dollywood-work.jpg" alt="Dollywood Experience">
+            </div>
+            <div class="section-text">
+                <h2>The Magic of Dollywood</h2>
+                <p>Immersed in the heart of Tennessee's entertainment industry, working with an international team to create magical experiences for park visitors.</p>
+                <ul class="experience-list">
+                    <li>✓ Customer service excellence</li>
+                    <li>✓ Cross-cultural communication</li>
+                    <li>✓ Team leadership</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section">
+        <div class="section-content">
+            <div class="section-text">
+                <h2>Thai Flavors in Tennessee</h2>
+                <p>Brought authentic Thai culinary experience to the Smoky Mountains, working in a traditional restaurant and sharing cultural knowledge with guests.</p>
+                <ul class="experience-list">
+                    <li>✓ Food preparation & service</li>
+                    <li>✓ Cultural ambassadorship</li>
+                    <li>✓ Inventory management</li>
+                </ul>
+            </div>
+            <div class="section-image floating-element">
+                <img src="images/restaurant-work.jpg" alt="Restaurant Experience">
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <h2 class="section-title">Moments Captured</h2>
+        <div class="gallery-scroll">
+            <div class="gallery-item">
+                <img src="images/gallery1.jpg" alt="Work moment">
+            </div>
+            <div class="gallery-item">
+                <img src="images/gallery2.jpg" alt="Team photo">
+            </div>
+            <div class="gallery-item">
+                <img src="images/gallery3.jpg" alt="Cultural exchange">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-image, .section-text').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero video
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelector('.hero-video').style.transform = 
+                `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
