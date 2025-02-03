@@ -176,6 +176,106 @@
             transform: scaleX(1);
             transform-origin: left;
         }
+        .floating-envelope {
+            font-size: 4rem;
+            text-align: center;
+            margin: 2rem 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .contact-form {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: '✉️';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            right: -50px;
+            top: -50px;
+            z-index: -1;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .form-element {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-element:nth-child(1) { animation-delay: 0.2s; }
+        .form-element:nth-child(2) { animation-delay: 0.4s; }
+        .form-element:nth-child(3) { animation-delay: 0.6s; }
+        .form-element:nth-child(4) { animation-delay: 0.8s; }
+
+        .amazon-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .amazon-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
+        }
+
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #4CAF50;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+            z-index: 1000;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            90% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .floating-shapes div {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 153, 0, 0.3);
+            border-radius: 50%;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        /* Add to existing dark mode styles */
+        body.dark-mode .contact-form::before {
+            opacity: 0.05;
+        }
+
+        body.dark-mode .floating-shapes div {
+            background: rgba(255, 153, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -196,16 +296,25 @@
         <a href="contact.html" class="nav-link">Contact</a>
     </nav>
 
+    <div class="floating-envelope">📨</div>
+    <div class="floating-shapes"></div>
+
     <div class="profile-container">
-        <h2 style="text-align: center;">Contact Me</h2>
+        <h2 style="text-align: center; animation: slideUp 0.8s ease;">Contact Me</h2>
         <div class="contact-form">
-            <form action="https://formspree.io/f/xjkgwgvz" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="amazon-button">Send Message</button>
+            <form id="contactForm" action="https://formspree.io/f/xjkgwgvz" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required class="form-element">
+                <input type="email" name="email" placeholder="Your Email" required class="form-element">
+                <textarea name="message" placeholder="Your Message" rows="5" required class="form-element"></textarea>
+                <button type="submit" class="amazon-button form-element">Send Message 🚀</button>
             </form>
         </div>
+    </div>
+
+    <div class="success-message">
+        <h3>Message Sent! 🚀</h3>
+        <p>Your message is on its way to me!</p>
+        <div style="font-size: 3rem;">🎉</div>
     </div>
 
     <footer class="footer">
@@ -239,6 +348,58 @@
                 localStorage.setItem('theme', 'light-mode');
             }
         });
+        function createFloatingShapes() {
+            const container = document.querySelector('.floating-shapes');
+            for (let i = 0; i < 15; i++) {
+                const shape = document.createElement('div');
+                shape.style.left = Math.random() * 100 + 'vw';
+                shape.style.top = Math.random() * 100 + 'vh';
+                shape.style.animationDelay = Math.random() * 2 + 's';
+                shape.style.width = shape.style.height = Math.random() * 20 + 10 + 'px';
+                container.appendChild(shape);
+            }
+        }
+        createFloatingShapes();
+
+        // Form submission handler
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success message
+            document.querySelector('.success-message').style.display = 'block';
+            
+            // Trigger confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff9900', '#ffffff', '#4CAF50']
+            });
+
+            // Actually submit the form after animation
+            setTimeout(() => {
+                e.target.submit();
+            }, 2000);
+        });
+
+        // Add hover effect to inputs
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.transform = 'translateY(-3px)';
+                element.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'translateY(0)';
+                element.style.boxShadow = 'none';
+            });
+        });
+
+        // Add random color change to envelope
+        const envelope = document.querySelector('.floating-envelope');
+        setInterval(() => {
+            envelope.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+        }, 3000);
     </script>
 </body>
 </html>
