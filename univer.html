@@ -1,11 +1,122 @@
-<link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phawat - My Profile & Portfolio</title>
+    <title>My ABAC Journey</title>
+    <link rel="stylesheet" href="style.css">
     <style>
+        /* ABAC Page Specific Styles */
+        .abac-hero {
+            height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('images/abac-campus.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .abac-hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: #ff9900;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin: 40px 0;
+            width: 45%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 55%;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-right: 55%;
+        }
+
+        .timeline-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .course-card.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .floating-emoji {
+            font-size: 2em;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .abac-logo {
+            width: 150px;
+            margin: 20px auto;
+            display: block;
+            animation: rotate 15s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
         * {
             margin: 0;
             padding: 0;
@@ -240,97 +351,86 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo">Phawat</div>
-        <input type="text" placeholder="Search portfolio..." style="flex-grow: 1; padding: 5px">
-        <div style="margin-left: 20px;">Hello, User!</div>
+        <div class="logo">ABAC Journey</div>
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="skills.html" class="nav-link">Skills</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
     </header>
 
-    <nav class="nav-bar">
-        <a href="index.html" class="nav-link">My Profile</a>
-        <a href="skills.html" class="nav-link">Skills</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-    </nav>
+    <div class="abac-hero">
+        <h1>My ABAC Adventure<span class="floating-emoji">🎓</span></h1>
+    </div>
 
-    <div class="profile-container">
-        <div class="profile-header">
-            <img src="images/My_logo_Only_Logo.png" alt="Profile Picture" class="profile-pic">
-            <div>
-                <h1>Phawat Tanajiranon</h1>
-                <p>📌 Senior Full Stack Developer</p>
-                <p>⭐ I want to learn many things</p>
-                <a href="contact.html">
-                    <button class="amazon-button">Contact Me</button>
-                </a>
-            </div>
-            
+    <div class="timeline-container">
+        <div class="timeline-line"></div>
+        
+        <div class="timeline-item">
+            <h3>First Year Discoveries 🌱</h3>
+            <p>2019 - Found my passion for programming through introductory courses</p>
+            <div class="floating-emoji">💡</div>
         </div>
 
-        <h2>Featured Projects</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Abac.jpg" 
-                    alt="Project 1" 
-                    style="object-fit: cover; display: block;">
-                <h3 style="margin-top: 30px;">ABAC</h3>
-                <p>Student_ABAC</p>
-                <a href="univer.html">
-                    <button class="amazon-button">View Details</button>
-                    </a>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/WAT.jpg" 
-                     alt="Work and Travel USA" 
-                     style="object-fit: cover; display: block;">
-                <h3 style="margin-top: 30px;">Work and Travel USA</h3>
-                <p>Work at Dollywood theme park and Thai restaurant</p>
-                <button class="amazon-button">View Details</button>
-            </div>
+        <div class="timeline-item">
+            <h3>International Program 🚀</h3>
+            <p>2020 - Joined the Computer Science international program</p>
+            <div class="floating-emoji">🌍</div>
+        </div>
+
+        <div class="timeline-item">
+            <h3>First Web Project 💻</h3>
+            <p>2021 - Developed university event management system</p>
+            <div class="floating-emoji">👨💻</div>
         </div>
     </div>
-    
-    <footer class="footer">
-        <p>© Phawat Tanajiranon ABAC Student.</p>
-        <div style="margin-top: 10px;">
-            <a href="#" class="nav-link">Privacy Policy</a>
-            <a href="#" class="nav-link">Terms of Service</a>
-            <a href="index.html" class="nav-link">About Me</a>
+
+    <h2 style="text-align: center; margin: 50px 0;">Key Courses Taken</h2>
+    <div class="course-grid">
+        <div class="course-card">
+            <h3>Web Development</h3>
+            <p>Mastered full-stack development with MERN stack</p>
+            <div class="floating-emoji">📚</div>
         </div>
-    </footer>
+        <div class="course-card">
+            <h3>Database Systems</h3>
+            <p>SQL optimization and NoSQL databases</p>
+            <div class="floating-emoji">🗄️</div>
+        </div>
+        <div class="course-card">
+            <h3>Cloud Computing</h3>
+            <p>AWS certified solutions architect training</p>
+            <div class="floating-emoji">☁️</div>
+        </div>
+    </div>
+
+    <img src="images/abac-logo.png" alt="ABAC Logo" class="abac-logo">
 
     <script>
-        // Enhanced button ripple effect
-        document.querySelectorAll('.amazon-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                ripple.classList.add('ripple');
-                
-                const rect = button.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
+        // Timeline animation
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const courseCards = document.querySelectorAll('.course-card');
 
-        // Scroll animation trigger
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('active');
                 }
             });
-        });
+        }, { threshold: 0.5 });
 
-        // Apply to all portfolio items
-        document.querySelectorAll('.portfolio-item').forEach(item => {
-            observer.observe(item);
+        timelineItems.forEach(item => observer.observe(item));
+        courseCards.forEach(card => observer.observe(card));
+
+        // Random emoji animation
+        const emojis = ['🎉', '🌟', '💪', '🔥', '🚀'];
+        document.querySelectorAll('.floating-emoji').forEach(emoji => {
+            emoji.style.animationDelay = `${Math.random() * 2}s`;
+            if(Math.random() > 0.5) {
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            }
         });
     </script>
 </body>
 </html>
+
