@@ -38,12 +38,34 @@
       background-color: var(--background-color);
       color: var(--text-color);
     }
-    /* Theme Toggle Styles */
+    /* Header & Navigation (Updated to match index.html) */
+    header {
+      background-color: var(--header-bg);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+    .search-container {
+      flex-grow: 1;
+      margin: 0 20px;
+      position: relative;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+    }
     .mode-toggle {
       display: flex;
       align-items: center;
-      margin-left: auto;
-      gap: 10px;
     }
     .toggle-switch {
       position: relative;
@@ -84,53 +106,39 @@
     input:checked + .slider:before {
       transform: translateX(26px);
     }
-    /* Header & Navigation */
-    .header {
-      background-color: var(--header-bg);
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      color: white;
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: var(--accent-color);
-      margin-right: 30px;
-    }
-    /* Navigation */
-    nav {
-      background-color: #37475a;
+    nav.nav-bar {
+      background-color: var(--nav-bg);
       padding: 10px 20px;
       text-align: center;
     }
-    nav a.nav-link {
+    nav.nav-bar a.nav-link {
       color: white;
+      text-decoration: none;
       margin: 0 15px;
       position: relative;
       padding-bottom: 5px;
       transition: color 0.3s ease;
     }
-    nav a.nav-link:hover {
-      color: #ff9900;
+    nav.nav-bar a.nav-link:hover {
+      color: var(--accent-color);
     }
-    nav a.nav-link::after {
+    nav.nav-bar a.nav-link::after {
       content: '';
       position: absolute;
       width: 100%;
       height: 2px;
-      background: #ff9900;
+      background: var(--accent-color);
       bottom: 0;
       left: 0;
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.3s ease;
     }
-    nav a.nav-link:hover::after {
+    nav.nav-bar a.nav-link:hover::after {
       transform: scaleX(1);
       transform-origin: left;
     }
-    /* Main Content */
+    /* Contact Page Styles */
     .profile-container {
       max-width: 1200px;
       margin: 20px auto;
@@ -266,6 +274,7 @@
       margin: 0 10px;
       color: white;
       transition: color 0.3s ease;
+      text-decoration: none;
     }
     .footer a.nav-link:hover {
       color: var(--accent-color);
@@ -274,9 +283,11 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="header">
+  <header>
     <div class="logo">Phawat</div>
-    <input type="text" placeholder="Search skills..." style="flex-grow: 1; padding: 5px" />
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search projects..." autocomplete="off" />
+    </div>
     <div class="mode-toggle">
       <label class="toggle-switch">
         <input type="checkbox" id="mode-toggle" />
