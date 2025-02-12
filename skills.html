@@ -1,397 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phawat - Skills</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Keep existing styles from index.html */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phawat - Skills</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    /* Reset & Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
-        .header {
-            background-color: #232f3e;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            color: white;
-        }
+    /* Header & Navigation (same as index.html) */
+    header {
+      background-color: #232f3e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff9900;
+    }
+    .search-container {
+      flex-grow: 1;
+      margin: 0 20px;
+      position: relative;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+    }
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #ff9900;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    nav.nav-bar {
+      background-color: #37475a;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    nav.nav-bar a.nav-link {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      position: relative;
+      padding-bottom: 5px;
+      transition: color 0.3s ease;
+    }
+    nav.nav-bar a.nav-link:hover {
+      color: #ff9900;
+    }
+    nav.nav-bar a.nav-link::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: #ff9900;
+      bottom: 0;
+      left: 0;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    nav.nav-bar a.nav-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff9900;
-            margin-right: 30px;
-        }
+    /* Footer */
+    footer.footer {
+      background-color: #232f3e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+    footer.footer a.nav-link {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer.footer a.nav-link:hover {
+      color: #ff9900;
+    }
 
-        .nav-bar {
-            background-color: #37475a;
-            padding: 10px;
-            color: white;
-        }
+    /* Skills Page Styles */
+    .skills-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #232f3e;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #ff9900;
+      margin: 10px auto;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .skill-card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateY(0);
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: slideUp 0.6s ease forwards;
+    }
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .skill-icon {
+      font-size: 2.5rem;
+      color: #ff9900;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+    .skill-card:hover .skill-icon {
+      transform: rotate(15deg) scale(1.1);
+    }
+    .skill-title {
+      font-size: 1.4rem;
+      color: #232f3e;
+      margin-bottom: 10px;
+    }
+    .skill-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .skill-progress {
+      height: 8px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: #ff9900;
+      width: 0;
+      transition: width 1s ease-in-out;
+    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-        }
-
-        .footer {
-            background-color: #232f3e;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-
-        /* New Skills Page Styles */
-        .skills-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .skill-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transform: translateY(0);
-            transition: all 0.3s ease;
-            opacity: 0;
-            animation: slideUp 0.6s ease forwards;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            color: #ff9900;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .skill-card:hover .skill-icon {
-            transform: rotate(15deg) scale(1.1);
-        }
-
-        .skill-title {
-            font-size: 1.4rem;
-            color: #232f3e;
-            margin-bottom: 10px;
-        }
-
-        .skill-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .skill-progress {
-            height: 8px;
-            background: #f0f0f0;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: #ff9900;
-            width: 0;
-            transition: width 1s ease-in-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #232f3e;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: #ff9900;
-            margin: 10px auto;
-        }
-
-        @media (max-width: 768px) {
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .nav-link {
-            position: relative;
-            padding-bottom: 5px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #ff9900;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: #ff9900;
-            bottom: 0;
-            left: 0;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        /* Light/Dark Mode Toggle Switch */
-        .mode-toggle {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #ff9900;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        /* Dark Mode Styles */
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        body.dark-mode .header {
-            background-color: #1a1a1a;
-        }
-
-        body.dark-mode .nav-bar {
-            background-color: #2d2d2d;
-        }
-
-        body.dark-mode .skill-card {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-
-        body.dark-mode .skill-title {
-            color: #ffffff;
-        }
-
-        body.dark-mode .skill-description {
-            color: #ccc;
-        }
-
-        body.dark-mode .footer {
-            background-color: #1a1a1a;
-        }
-
-        body.dark-mode .nav-link {
-            color: #ffffff;
-        }
-
-        body.dark-mode .nav-link:hover {
-            color: #ff9900;
-        }
-
-        body.dark-mode .section-title {
-            color: #ffffff;
-        }
-
-        body.dark-mode .section-title::after {
-            background: #ff9900;
-        }
-    </style>
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    body.dark-mode header {
+      background-color: #1a1a1a;
+    }
+    body.dark-mode nav.nav-bar {
+      background-color: #2d2d2d;
+    }
+    body.dark-mode .skill-card {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+    body.dark-mode .skill-title {
+      color: #ffffff;
+    }
+    body.dark-mode .skill-description {
+      color: #ccc;
+    }
+    body.dark-mode footer.footer {
+      background-color: #1a1a1a;
+    }
+    body.dark-mode nav.nav-bar a.nav-link {
+      color: #ffffff;
+    }
+    body.dark-mode nav.nav-bar a.nav-link:hover {
+      color: #ff9900;
+    }
+    body.dark-mode .section-title {
+      color: #ffffff;
+    }
+    body.dark-mode .section-title::after {
+      background: #ff9900;
+    }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">Phawat</div>
-        <input type="text" placeholder="Search skills..." style="flex-grow: 1; padding: 5px">
-        <div class="mode-toggle">
-            <label class="toggle-switch">
-                <input type="checkbox" id="mode-toggle">
-                <span class="slider"></span>
-            </label>
-        </div>
-    </header>
-
-    <nav class="nav-bar">
-        <a href="index.html" class="nav-link">My Profile</a>
-        <a href="skills.html" class="nav-link">Skills</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-    </nav>
-
-    <div class="skills-container">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card" style="animation-delay: 0.2s;">
-                <i class="fas fa-code skill-icon"></i>
-                <h3 class="skill-title">Frontend Development</h3>
-                <p class="skill-description">HTML5, CSS3, JavaScript, React.js</p>
-                <div class="skill-progress">
-                    <div class="progress-bar" style="width: 70%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card" style="animation-delay: 0.4s;">
-                <i class="fas fa-server skill-icon"></i>
-                <h3 class="skill-title">Backend Development</h3>
-                <p class="skill-description">Node.js, Python, MySQL</p>
-                <div class="skill-progress">
-                    <div class="progress-bar" style="width: 45%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card" style="animation-delay: 0.6s;">
-                <i class="fas fa-mobile-alt skill-icon"></i>
-                <h3 class="skill-title">Mobile Development</h3>
-                <p class="skill-description">React Native, Flutter, Android Studio</p>
-                <div class="skill-progress">
-                    <div class="progress-bar" style="width: 75%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card" style="animation-delay: 0.8s;">
-                <i class="fas fa-cloud skill-icon"></i>
-                <h3 class="skill-title">Cloud & DevOps</h3>
-                <p class="skill-description">AWS</p>
-                <div class="skill-progress">
-                    <div class="progress-bar" style="width: 20%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card" style="animation-delay: 1s;">
-                <i class="fas fa-database skill-icon"></i>
-                <h3 class="skill-title">Database Management</h3>
-                <p class="skill-description">MySQL</p>
-                <div class="skill-progress">
-                    <div class="progress-bar" style="width: 10%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card" style="animation-delay: 1.2s;">
-                <i class="fas fa-tools skill-icon"></i>
-                <h3 class="skill-title">Tools & Technologies</h3>
-                <p class="skill-description">Git, Figma</p>
-                <div class="skill-progress">
-                    <div class="progress-bar" style="width: 22%"></div>
-                </div>
-            </div>
-        </div>
+  <!-- Header -->
+  <header>
+    <div class="logo">Phawat</div>
+    <div class="search-container">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search skills..."
+        autocomplete="off"
+      />
     </div>
+    <div class="mode-toggle">
+      <label class="toggle-switch">
+        <input type="checkbox" id="mode-toggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
 
-    <footer class="footer">
-        <p>© Phawat Tanajiranon ABAC Student.</p>
-        <div style="margin-top: 10px;">
-            <a href="#" class="nav-link">Privacy Policy</a>
-            <a href="#" class="nav-link">Terms of Service</a>
-            <a href="index.html" class="nav-link">About Me</a>
+  <!-- Navigation (same as first page) -->
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-link">My Profile</a>
+    <a href="skills.html" class="nav-link">Skills</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Main Content: Skills -->
+  <div class="skills-container">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card" style="animation-delay: 0.2s;">
+        <i class="fas fa-code skill-icon"></i>
+        <h3 class="skill-title">Frontend Development</h3>
+        <p class="skill-description">HTML5, CSS3, JavaScript, React.js</p>
+        <div class="skill-progress">
+          <div class="progress-bar" style="width: 70%"></div>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        // Animate progress bars on scroll
-        const animateOnScroll = () => {
-            const progressBars = document.querySelectorAll('.progress-bar');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.width = entry.target.dataset.width;
-                    }
-                });
-            });
+      <div class="skill-card" style="animation-delay: 0.4s;">
+        <i class="fas fa-server skill-icon"></i>
+        <h3 class="skill-title">Backend Development</h3>
+        <p class="skill-description">Node.js, Python, MySQL</p>
+        <div class="skill-progress">
+          <div class="progress-bar" style="width: 45%"></div>
+        </div>
+      </div>
 
-            progressBars.forEach(bar => {
-                bar.dataset.width = bar.style.width;
-                bar.style.width = '0';
-                observer.observe(bar);
-            });
-        };
+      <div class="skill-card" style="animation-delay: 0.6s;">
+        <i class="fas fa-mobile-alt skill-icon"></i>
+        <h3 class="skill-title">Mobile Development</h3>
+        <p class="skill-description">React Native, Flutter, Android Studio</p>
+        <div class="skill-progress">
+          <div class="progress-bar" style="width: 75%"></div>
+        </div>
+      </div>
 
-        window.addEventListener('load', animateOnScroll);
+      <div class="skill-card" style="animation-delay: 0.8s;">
+        <i class="fas fa-cloud skill-icon"></i>
+        <h3 class="skill-title">Cloud & DevOps</h3>
+        <p class="skill-description">AWS</p>
+        <div class="skill-progress">
+          <div class="progress-bar" style="width: 20%"></div>
+        </div>
+      </div>
 
-        // Light/Dark Mode Toggle
-        const modeToggle = document.getElementById('mode-toggle');
-        modeToggle.addEventListener('change', function() {
-            document.body.classList.toggle('dark-mode', this.checked);
+      <div class="skill-card" style="animation-delay: 1s;">
+        <i class="fas fa-database skill-icon"></i>
+        <h3 class="skill-title">Database Management</h3>
+        <p class="skill-description">MySQL</p>
+        <div class="skill-progress">
+          <div class="progress-bar" style="width: 10%"></div>
+        </div>
+      </div>
+
+      <div class="skill-card" style="animation-delay: 1.2s;">
+        <i class="fas fa-tools skill-icon"></i>
+        <h3 class="skill-title">Tools & Technologies</h3>
+        <p class="skill-description">Git, Figma</p>
+        <div class="skill-progress">
+          <div class="progress-bar" style="width: 22%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© Phawat Tanajiranon ABAC Student.</p>
+    <div style="margin-top: 10px;">
+      <a href="#" class="nav-link">Privacy Policy</a>
+      <a href="#" class="nav-link">Terms of Service</a>
+      <a href="index.html" class="nav-link">About Me</a>
+    </div>
+  </footer>
+
+  <script>
+    // Animate progress bars on scroll
+    const animateOnScroll = () => {
+      const progressBars = document.querySelectorAll('.progress-bar');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Set the width to the value defined inline (e.g., "70%")
+            entry.target.style.width = entry.target.getAttribute('style').match(/width:\s*([^;]+)/)[1];
+          }
         });
-    </script>
+      });
+      progressBars.forEach(bar => {
+        observer.observe(bar);
+      });
+    };
+    window.addEventListener('load', animateOnScroll);
+
+    // Light/Dark Mode Toggle
+    const modeToggle = document.getElementById('mode-toggle');
+    modeToggle.addEventListener('change', function() {
+      document.body.classList.toggle('dark-mode', this.checked);
+    });
+  </script>
 </body>
 </html>
